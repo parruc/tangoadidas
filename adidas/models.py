@@ -9,8 +9,12 @@ class Event(models.Model):
     time = models.TimeField(verbose_name="Data")
     place = models.TextField(verbose_name="Luogo")
 
+    class Meta:
+        verbose_name = "Evento"
+        verbose_name_plural = "Eventi"
+
     def __str__(self):
-        return self.verbose_name
+        return self.title
 
 
 class Team(models.Model):
@@ -18,8 +22,12 @@ class Team(models.Model):
     event = models.ForeignKey(Event)
     members = models.ManyToManyField(User, through='TeamMembership')
 
+    class Meta:
+        verbose_name = "Squadra"
+        verbose_name_plural = "Squadre"
+
     def __str__(self):
-        return self.verbose_name
+        return self.name
 
 
 class TeamMembership(models.Model):
