@@ -14,6 +14,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 from .basesettings import ALLOWED_HOSTS
 from .basesettings import DATABASES
+# SECURITY WARNING: don't run with debug turned on in production!
+from .basesettings import DEBUG
 
 import os
 
@@ -27,10 +29,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'p0(*h5tt-#hj6(-tsmg#&smdm^98_!@b3hd2z1q#tq#tv1b4ch'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 
 
 # Application definition
