@@ -10,11 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
+
+
+
+
+
+
+
+
+
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+# SECURITY WARNING: don't run with debug turned on in production!
 from .basesettings import ALLOWED_HOSTS
 from .basesettings import DATABASES
-# SECURITY WARNING: don't run with debug turned on in production!
 from .basesettings import DEBUG
 
 import os
@@ -34,6 +43,7 @@ SECRET_KEY = 'p0(*h5tt-#hj6(-tsmg#&smdm^98_!@b3hd2z1q#tq#tv1b4ch'
 # Application definition
 
 INSTALLED_APPS = [
+    'material',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -62,6 +72,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.request',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -112,3 +123,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/static/'
+
+if DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
+    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')

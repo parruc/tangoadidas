@@ -1,11 +1,17 @@
-from django.contrib import admin
-
 from .models import Event
 from .models import Team
+from .models import TeamMembership
+from django.contrib import admin
+
+
+class TeamMembershipInline(admin.TabularInline):
+    model = TeamMembership
+    extra = 1
+
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    pass
+    inlines = (TeamMembershipInline,)
 
 
 @admin.register(Event)
