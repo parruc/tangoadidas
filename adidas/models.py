@@ -3,6 +3,14 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+class Player(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Giocatore"
+        verbose_name_plural = "Giocatori"
+
+
 class Event(models.Model):
     title = models.CharField(verbose_name="Titolo", max_length=128)
     date = models.DateField(verbose_name="Data")
@@ -20,7 +28,7 @@ class Event(models.Model):
 class Team(models.Model):
     name = models.CharField(verbose_name="Nome", max_length=128)
     event = models.ForeignKey(Event)
-    members = models.ManyToManyField(User, through='TeamMembership')
+    members = models.ManyToManyField(Player, through='TeamMembership')
 
     class Meta:
         verbose_name = "Squadra"
@@ -31,7 +39,7 @@ class Team(models.Model):
 
 
 class TeamMembership(models.Model):
-    player = models.ForeignKey(User)
+    player = models.ForeignKey(Player)
     team = models.ForeignKey(Team)
     date_joined = models.DateField()
     leader = models.BooleanField(default=False)
