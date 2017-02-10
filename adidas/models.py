@@ -4,7 +4,8 @@ from django.db import models
 
 
 class Player(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,
+                                related_name="player")
 
     class Meta:
         verbose_name = "Giocatore"
@@ -46,4 +47,4 @@ class TeamMembership(models.Model):
     accepted = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Team " + team.name + " enrolled for event " + event.title
+        return "Team " + self.team.name + " for event " + self.event.title
