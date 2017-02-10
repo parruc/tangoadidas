@@ -1,4 +1,5 @@
 from .models import Event
+from .models import Player
 from .models import Team
 from .models import TeamMembership
 from django.contrib import admin
@@ -16,4 +17,9 @@ class TeamAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Player)
+class PlayerAdmin(admin.ModelAdmin):
     pass
