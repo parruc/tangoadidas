@@ -55,6 +55,8 @@ SECRET_KEY = DJANGO_SECRET_KEY
 
 INSTALLED_APPS = [
     'material',
+    'material.frontend',
+    'material.admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -150,5 +152,8 @@ COMPRESS_PRECOMPILERS = (
 )
 
 if DEBUG:
+    def show_toolbar(request):
+        return True
+    DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": show_toolbar}
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
