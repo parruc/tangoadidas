@@ -13,13 +13,14 @@ class TeamMembershipInline(admin.TabularInline):
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
     inlines = (TeamMembershipInline,)
+    icon = '<i class="material-icons">supervisor_account</i>'
 
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    pass
+    icon = '<i class="material-icons">schedule</i>'
 
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
-    pass
+    icon = '<i class="material-icons">person_pin</i>'
