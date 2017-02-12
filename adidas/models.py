@@ -47,4 +47,4 @@ class TeamMembership(models.Model):
     accepted = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Team " + self.team.name + " for event " + self.event.title
+        return "Team " + self.team.name + " for event " + self.team.event.title
