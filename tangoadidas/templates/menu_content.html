@@ -1,0 +1,18 @@
+<li>
+    <a href="{% url 'homepage' %}">Home</a>
+</li>
+{% if user.is_authenticated %}
+<li>
+    <a href="{% url 'profile_view' %}">{{ user.username }} profile</a>
+</li>
+<li>
+    <a href="{% url 'sign-out' %}">Sign out</a>
+</li>
+{% else %}
+<li>
+    <a href="{% url 'register' %}">Register</a>
+</li>
+<li>
+    <a href="{% url 'sign-in' %}">Sign in</a>
+</li>
+{% endif %}
