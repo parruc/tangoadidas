@@ -1,1 +1,18 @@
 {% extends "base.html" %}
+
+{% block main_content %}
+
+{% for membership in memberships %}
+<div class="card horizontal">
+    <div class="card-stacked">
+        <div class="card-content">
+            <p>Team: {{ membership.team.name }}</p>
+        </div>
+        <!--div class="card-action">
+            <a href="#">This is a link</a>
+        </div-->
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
