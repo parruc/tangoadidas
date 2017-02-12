@@ -71,7 +71,7 @@ class ProfileDetailView(ProfileObjMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['teams'] = Player.teammembership_set
+        context['memberships'] = context["player"].teammembership_set.all()
         return context
 
 
