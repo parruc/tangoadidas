@@ -19,7 +19,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     url(r'^$', views.HomepageView.as_view(), name="homepage"),
-    url(r'^profile/view$', views.ProfileDetailView.as_view(),
+    url(r'^accounts/profile/$', views.ProfileDetailView.as_view(),
         name="profile_view"),
     url(r'^profile/update$', views.ProfileUpdateView.as_view(),
         name="profile_update"),

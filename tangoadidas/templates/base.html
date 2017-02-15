@@ -6,13 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     {% compress css %}
         {% include 'material/includes/material_css.html' %}
-        <link rel="text/less" href="{% static 'adidas/css/style.less' %}" type="text/css" charset="utf-8">
+        <link rel="text/less" href="{% static 'adidas/css/style.less' %}" type="text/css" charset="utf-8" />
     {% endcompress %}
     {% compress js %}
-        <script type="text/javascript" src="{% static 'adidas/js/jquery-2.1.1.min.js' %}" charset="utf-8">
+        <script type="text/javascript" src="{% static 'adidas/js/jquery-2.1.1.min.js' %}" charset="utf-8"></script>
         {% include 'material/includes/material_js.html'%}
-        <script type="text/javascript" src="{% static 'adidas/js/init.js' %}" charset="utf-8">
+        <script type="text/javascript" src="{% static 'adidas/js/init.js' %}" charset="utf-8"></script>
     {% endcompress %}
+    <script>
+        {% if messages %}
+            {% for message in messages %}
+            aaaaa
+                Materialize.toast('{{ message }}', 4000);
+            {% endfor %}
+        {% endif %}
+    </script>
 
     <title>{% block head_title %} Benvenuto in {% endblock head_title%} - Tango Adidas</title>
 </head>

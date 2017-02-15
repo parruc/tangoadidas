@@ -3,15 +3,16 @@
 </li>
 {% if user.is_authenticated %}
 <li>
-    <a href="{% url 'profile_view' %}">{{ user.username }} profile</a>
+    {% if user.is_superuser %}
+        <a href="{% url 'admin:index' %}">{{ user.username }}</a>
+    {% else %}
+        <a href="{% url 'profile_view' %}">{{ user.username }}</a>
+    {% endif %}
 </li>
 <li>
     <a href="{% url 'account_logout' %}">Sign out</a>
 </li>
 {% else %}
-<li>
-    <a href="{% url 'account_signup' %}">Register</a>
-</li>
 <li>
     <a href="{% url 'account_login' %}">Sign in</a>
 </li>
