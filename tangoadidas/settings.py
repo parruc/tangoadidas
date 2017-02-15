@@ -55,6 +55,7 @@ SECRET_KEY = DJANGO_SECRET_KEY
 # Application definition
 
 INSTALLED_APPS = [
+    'authauth',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

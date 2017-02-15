@@ -19,9 +19,6 @@ from django.conf.urls import url
 
 urlpatterns = [
     url(r'^$', views.HomepageView.as_view(), name="homepage"),
-    url(r'^register$', views.RegistrationView.as_view(), name="register"),
-    url(r'^sign-in$', views.SignInView.as_view(), name="sign-in"),
-    url(r'^sign-out$', views.SignOutView.as_view(), name="sign-out"),
     url(r'^profile/view$', views.ProfileDetailView.as_view(),
         name="profile_view"),
     url(r'^profile/update$', views.ProfileUpdateView.as_view(),

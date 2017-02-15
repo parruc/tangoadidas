@@ -14,27 +14,37 @@
         <script type="text/javascript" src="{% static 'adidas/js/init.js' %}" charset="utf-8">
     {% endcompress %}
 
-    <title>{% block html_title %} Benvenuto in {% endblock %} - Tango Adidas</title>
+    <title>{% block head_title %} Benvenuto in {% endblock head_title%} - Tango Adidas</title>
 </head>
 
 <body>
     <header>
-        {% include 'menu.html' %}
-        {% include 'title.html' %}
+        {% block navigation %}
+            {% include 'menu.html' %}
+        {% endblock navigation %}
     </header>
 
     <div class="container">
       <div class="section">
-        {% block main_content %}
-            <article>
-                <header>
-                    <h2>Article title</h2>
-                    <p>Posted on <time datetime="2009-09-04T16:31:24+02:00">September 4th 2009</time>                    by <a href="#">Writer</a> - <a href="#comments">6 comments</a></p>
-                </header>
-                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada
-                    fames ac turpis egestas.</p>
-            </article>
-        {% endblock %}
+          <article>
+          <header>
+              <div class="section no-pad-bot" id="index-banner">
+                <div class="container">
+                  <br><br>
+                  <h1 class="header center">{% block title %}Adidas Template {% endblock title %}</h1>
+                  <div class="row center">
+                    <h5 class="header col s12 light">{% block subtitle %}subtitle text here{% endblock subtitle %}</h5>
+                  </div>
+                  {% block call_to_action %}
+                  {% endblock call_to_action%}
+                </div>
+              </div>
+          </header>
+
+            {% block content %}
+                Contenuto di prova
+            {% endblock content %}
+          </article>
       </div>
     </div>
     <!--aside>

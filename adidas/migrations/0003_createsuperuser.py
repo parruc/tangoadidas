@@ -7,8 +7,8 @@ from django.db import migrations
 
 def forwards(apps, schema_editor):
     User = apps.get_registered_model('auth', 'User')
-    admin = User.objects.get(username="admin")
-    if not admin:
+    admin = User.objects.filter(username="admin")
+    if len(admin) == 0:
         admin = User(username="admin",
                      email='parruc@gmail.com',
                      password=make_password('admin'),
