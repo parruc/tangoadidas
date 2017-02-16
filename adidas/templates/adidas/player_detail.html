@@ -2,6 +2,8 @@
 
 {% block content %}
 
+<a href="{% url 'profile_update' %}">Modifica il profilo</a>
+
 {% for membership in memberships %}
 <div class="card horizontal">
     <div class="card-stacked">
