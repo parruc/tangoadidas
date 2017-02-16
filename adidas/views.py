@@ -18,7 +18,6 @@ from django.views.generic import FormView
 from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 from django.views.generic.detail import SingleObjectMixin
-from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 
 
@@ -46,16 +45,6 @@ class ProfileObjMixin(SingleObjectMixin):
         return super(ProfileObjMixin, self).dispatch(request, *args, **kwargs)
 
 
-class ProfileAddView(ProfileObjMixin, CreateView):
-    """
-    A view that creating a user's profile.
-
-    Uses a form dynamically created for the `Player` model and
-    the default model's update template.
-    """
-    pass
-
-
 class ProfileUpdateView(ProfileObjMixin, UpdateView):
     """
     A view that displays a form for editing a user's profile.
@@ -63,7 +52,7 @@ class ProfileUpdateView(ProfileObjMixin, UpdateView):
     Uses a form dynamically created for the `Player` model and
     the default model's update template.
     """
-    pass
+    fields = ["name"]
 
 
 class ProfileDetailView(ProfileObjMixin, DetailView):
@@ -72,11 +61,8 @@ class ProfileDetailView(ProfileObjMixin, DetailView):
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the books
         context['memberships'] = context["player"].teammembership_set.all()
+
         return context
-
-
-class RegistrationView(TemplateView):
-        template = "adidas/homepage.html"
 
 
 class SignInView(FormView):

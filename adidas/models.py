@@ -1,12 +1,13 @@
 from __future__ import unicode_literals
 from datetime import date
-from django.contrib.auth.models import User
+#  from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
-class Player(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE,
-                                related_name="player")
+class Player(AbstractUser):
+    #  user = models.OneToOneField(User, on_delete=models.CASCADE,
+    #                              related_name="player")
     is_leader = models.BooleanField(default=False)
 
     class Meta:

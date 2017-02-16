@@ -107,7 +107,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tangoadidas.wsgi.application'
 
-
+AUTH_USER_MODEL = "adidas.Player"
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
