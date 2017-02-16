@@ -1,18 +1,16 @@
 from __future__ import unicode_literals
 from datetime import date
-#  from django.contrib.auth.models import User
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 class Player(AbstractUser):
-    #  user = models.OneToOneField(User, on_delete=models.CASCADE,
-    #                              related_name="player")
     is_leader = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Giocatore"
         verbose_name_plural = "Giocatori"
+        db_table = 'auth_user'
 
 
 class Event(models.Model):
