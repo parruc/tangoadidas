@@ -1,0 +1,1 @@
+<a {% if request.resolver_match.url_name == url_name %} class="active"{% endif %} href="{% url url_name %}">{{ url_title }}</a>

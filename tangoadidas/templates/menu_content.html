@@ -1,19 +1,18 @@
 <li>
-    <a href="{% url 'homepage' %}">Home</a>
+    {% include 'menu_item.html' with url_title='Home' url_name='homepage' %}
 </li>
 {% if user.is_authenticated %}
 <li>
-    {% if user.is_superuser %}
-        <a href="{% url 'admin:index' %}">{{ user.username }}</a>
-    {% else %}
-        <a href="{% url 'profile_view' %}">{{ user.username }}</a>
-    {% endif %}
+    {% include 'menu_item.html' with url_title=user.username url_name='profile_view' %}
 </li>
 <li>
-    <a href="{% url 'account_logout' %}">Sign out</a>
+    {% include 'menu_item.html' with url_title='Esci' url_name='account_logout' %}
 </li>
 {% else %}
 <li>
-    <a href="{% url 'account_login' %}">Sign in</a>
+    {% include 'menu_item.html' with url_title='Registrati' url_name='account_signup' %}
+</li>
+<li>
+    {% include 'menu_item.html' with url_title='Entra' url_name='account_login' %}
 </li>
 {% endif %}

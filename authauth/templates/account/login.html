@@ -1,25 +1,25 @@
 {% extends "account/base.html" %}
 
 {% load i18n %}
+{% load material_form %}
 {% load account socialaccount %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock head_title %}
-
-{% block title %}{% trans "Sign In" %}{% endblock title %}
-{% block subtitle %}Entra anche tu nella league{% endblock subtitle %}
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
 
-{% get_providers as socialaccount_providers %}
+{% block title %}{% trans "Sign In" %}{% endblock %}
+{% block subtitle %}Entra anche tu nella league{% endblock %}
 
-<p>Please sign in with one of your existing third party accounts.</p>
 
-<div class="socialaccount_ballot">
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {% form form=form %}{% endform %}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <a class="btn waves-effect waves-light" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+  <button class="btn waves-effect waves-light" type="submit">{% trans "Sign In" %} <i class="material-icons right">send</i></button>
+</form>
 
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
-
-{% include "socialaccount/snippets/login_extra.html" %}
-
-{% endblock content %}
+{% endblock %}
