@@ -33,13 +33,9 @@ class ProfileObjMixin(SingleObjectMixin):
 
     def get_object(self):
         """Return's the current users profile."""
-        try:
-            return self.request.user.player
-        except Player.DoesNotExist:
-            raise NotImplemented(
-                "What if the user doesn't have an associated profile?")
+        return self.request.user
 
-    @method_decorator(login_required(login_url=reverse_lazy('sign-in')))
+    @method_decorator(login_required(login_url=reverse_lazy('account_login')))
     def dispatch(self, request, *args, **kwargs):
         """Ensures that only authenticated users can access the view."""
         return super(ProfileObjMixin, self).dispatch(request, *args, **kwargs)
@@ -52,7 +48,7 @@ class ProfileUpdateView(ProfileObjMixin, UpdateView):
     Uses a form dynamically created for the `Player` model and
     the default model's update template.
     """
-    fields = ["name"]
+    fields = ["username", ]
 
 
 class ProfileDetailView(ProfileObjMixin, DetailView):
