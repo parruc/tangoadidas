@@ -1,0 +1,18 @@
+{% extends "account/base.html" %}
+
+{% load material_form %}
+
+{% block head_title %}Modifica il tuo profilo{% endblock %}
+
+{% block title %}Modifica il tuo profilo{% endblock %}
+{% block subtitle %}In questa pagina potrai cambiare le informazioni collegate al tuo utente{% endblock %}
+
+{% block content %}
+
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {% form form=form %}{% endform %}
+  <button class="btn waves-effect waves-light" type="submit">Salva <i class="material-icons right">send</i></button>
+</form>
+
+{% endblock %}
