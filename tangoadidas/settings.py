@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'compressor',
     'adidas',
+    'socialcrawler',
 ]
 
 MIDDLEWARE = [
@@ -114,6 +115,15 @@ AUTHENTICATION_BACKENDS = (
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+
+SOCIALACCOUNT_PROVIDERS = {
+    "facebook": {
+        "SCOPE": ['email', 'public_profile', 'user_posts', ]
+    },
+    "instagram": {
+        "SCOPE": ['basic', 'public_content', ]
+    },
+}
 
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
