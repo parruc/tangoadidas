@@ -24,7 +24,6 @@ class Command(BaseCommand):
             uri = "{uid}/posts/?access_token={token}"
             url = self.base_url + uri.format(**params)
             r = requests.get(url)
-            import ipdb; ipdb.set_trace()
             try:
                 fb_posts = r.json().get("data", [])
             except ValueError:
