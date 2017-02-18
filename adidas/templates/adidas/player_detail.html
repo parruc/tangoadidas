@@ -8,10 +8,6 @@
 {% block content %}
 
 
-<ul class="socialaccount_providers">
-{% include "socialaccount/snippets/provider_list.html" with process="connect" %}
-</ul>
-
 {% for membership in memberships %}
 <div class="card horizontal">
     <div class="card-stacked">
@@ -27,6 +23,6 @@
 
 <a class="btn waves-effect waves-light" href="{% url 'profile_update' %}">Modifica il profilo</a>
 <a class="btn waves-effect waves-light" href="{% url 'account_change_password' %}">Cambia la password</a>
-<a class="btn waves-effect waves-light" href="{% url 'account_email' %}">Modifica il profilo</a>
-
+<a class="btn waves-effect waves-light" href="{% url 'account_email' %}">Cambia la mail</a>
+<a class="btn waves-effect waves-light" href="{% url 'socialaccount_connections' %}">Connetti profili social</a>
 {% endblock %}
