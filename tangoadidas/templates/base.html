@@ -13,11 +13,15 @@
         {% include 'material/includes/material_js.html'%}
         <script type="text/javascript" src="{% static 'adidas/js/init.js' %}" charset="utf-8"></script>
     {% endcompress %}
-    <script>
+    <script type="text/javascript" charset="utf-8">
         {% if messages %}
-            {% for message in messages %}
-                Materialize.toast('{{ message }}', 4000);
-            {% endfor %}
+        (function ($) {
+           $(function () {
+                {% for message in messages %}
+                    Materialize.toast('{{ message }}', 4000);
+                {% endfor %}
+            });
+         })(jQuery);
         {% endif %}
     </script>
 
