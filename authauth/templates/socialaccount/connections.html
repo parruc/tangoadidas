@@ -2,55 +2,46 @@
 
 {% load material_form %}
 {% load i18n %}
+{% load socialaccount %}
+{% load authauth %}
 
 {% block head_title %}{% trans "Account Connections" %}{% endblock %}
 {% block title %}{% trans "Account Connections" %}{% endblock %}
 {% block subtitle %}
-    {% if form.accounts %}
-        {% blocktrans %}You can sign in to your account using any of the following third party accounts:{% endblocktrans %}
-    {% else %}
-        {% trans 'You currently have no social network accounts connected to this account.' %}
-    {% endif %}
+    In questa pagina puoi connettere o disconnettere gli account social.
+    Attenzione: disconnettendoli non potrai accumulare i punti stella.
 {% endblock %}
 
 {% block content %}
 
-{% if form.accounts %}
-
 <form method="post" action="{% url 'socialaccount_connections' %}">
 {% csrf_token %}
 
-<fieldset>
 {% if form.non_field_errors %}
 <div id="errorMsg">{{ form.non_field_errors }}</div>
 {% endif %}
 
+{% get_missing_social_providers request as missing_providers %}
+{% for missing_provider in missing_providers %}
+<div class="row">
+    Non sei connesso come tramite {{ missing_provider.name }}
+    <a class="btn green waves-effect waves-light" href="{{ missing_provider.url }}">
+        Connettiti a {{ missing_provider.name }}
+    </a>
+</div>
+{% endfor %}
+
 {% for base_account in form.accounts %}
 {% with base_account.get_provider_account as account %}
-<div>
-<label for="id_account_{{ base_account.id }}">
-<input id="id_account_{{ base_account.id }}" type="radio" name="account" value="{{ base_account.id }}"/>
-<span class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }}">{{account.get_brand.name}}</span>
-{{ account }}
-</label>
+<div class="row">
+    Sei connesso come {{ account }} tramite {{ account.get_brand.name }}
+    <button class="btn red waves-effect waves-light" id="id_account_{{ base_account.id }}" type="submit" name="account" value="{{ base_account.id }}">
+        Disconnetti da {{ account.get_brand.name }}
+    </button>
 </div>
 {% endwith %}
 {% endfor %}
 
-<div>
-<button type="submit">{% trans 'Remove' %}</button>
-</div>
-
-</fieldset>
-
 </form>
-{% endif %}
-<h2>{% trans 'Add a 3rd Party Account' %}</h2>
-
-<ul class="socialaccount_providers">
-{% include "socialaccount/snippets/provider_list.html" with process="connect" %}
-</ul>
-
-{% include "socialaccount/snippets/login_extra.html" %}
 
 {% endblock %}
