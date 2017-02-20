@@ -21,6 +21,17 @@
 </div>
 {% endfor %}
 
+Your social engagement
+{% with player.stars as stars %}
+{% for count in "12345" %}
+    {% if count >= stars %}
+         <i class="material-icons">star</i>
+    {% else %}
+         <i class="material-icons icon-yellow">star</i>
+    {% endif %}
+{% endfor %}
+{% endwith %}
+
 <a class="btn waves-effect waves-light" href="{% url 'profile_update' %}">Modifica il profilo</a>
 <a class="btn waves-effect waves-light" href="{% url 'account_change_password' %}">Cambia la password</a>
 <a class="btn waves-effect waves-light" href="{% url 'account_email' %}">Cambia la mail</a>
