@@ -21,16 +21,18 @@
 </div>
 {% endfor %}
 
-Your social engagement
+<div class="social-engagement">
 {% with player.stars as stars %}
-{% for count in "12345" %}
-    {% if count >= stars %}
+Your social engagement is {{ stars }} stars
+{% for count in '12345' %}
+    {% if forloop.counter > stars %}
          <i class="material-icons">star</i>
     {% else %}
-         <i class="material-icons icon-yellow">star</i>
+         <i class="material-icons yellow-text text-darken-1">star</i>
     {% endif %}
 {% endfor %}
 {% endwith %}
+</div>
 
 <a class="btn waves-effect waves-light" href="{% url 'profile_update' %}">Modifica il profilo</a>
 <a class="btn waves-effect waves-light" href="{% url 'account_change_password' %}">Cambia la password</a>
