@@ -12,6 +12,22 @@ class Player(AbstractUser):
         verbose_name_plural = "Giocatori"
         db_table = 'auth_user'
 
+    @property
+    def stars(self):
+        points = self.get_points()
+        thresholds = [1, 2, 4, 8, 200]
+        stars = 0
+        for threshold in thresholds:
+            if points > threshold:
+                stars += 1
+        return stars
+
+    def get_points(self):
+        points = 0
+        for post in self.post_set.all():
+            points += post.points
+        return points
+
 
 class Event(models.Model):
     title = models.CharField("Titolo", max_length=128)
