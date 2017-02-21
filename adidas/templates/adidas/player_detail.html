@@ -7,31 +7,53 @@
 
 {% block content %}
 
-
-{% for membership in memberships %}
-<div class="card horizontal">
-    <div class="card-stacked">
-        <div class="card-content">
-            <p>Team: {{ membership.team.name }}</p>
+<div class="team-memberships">
+    {% for membership in memberships %}
+    <div class="card horizontal">
+        <div class="card-stacked">
+            <div class="card-content">
+                <p>Team: {{ membership.team.name }}</p>
+            </div>
+            <!--div class="card-action">
+                <a href="#">This is a link</a>
+            </div-->
         </div>
-        <!--div class="card-action">
-            <a href="#">This is a link</a>
-        </div-->
     </div>
+    {% endfor %}
 </div>
-{% endfor %}
 
 <div class="social-engagement">
 {% with player.stars as stars %}
-Your social engagement is {{ stars }} stars
+Your social engagement is 
 {% for count in '12345' %}
     {% if forloop.counter > stars %}
-         <i class="material-icons">star</i>
+         <i class="material-icons grey-text text-lighten-2">star</i>
     {% else %}
          <i class="material-icons yellow-text text-darken-1">star</i>
     {% endif %}
 {% endfor %}
 {% endwith %}
+</div>
+
+<div class="social-recap">
+    <table>
+        <tr>
+            <th>Testo</th>
+            <th>Commenti</th>
+            <th>Likes</th>
+            <th>Condivisioni</th>
+            <th>Punti</th>
+        </tr>
+    {% for post in player.post_set.all %}
+    <tr>
+        <td>{{ post.text|truncatewords_html:50 }}</td>
+        <td>{{ post.comments }}</td>
+        <td>{{ post.likes }}</td>
+        <td>{{ post.shares }}</td>
+        <td>{{ post.points }}</td>
+    </tr>
+    {% endfor %}
+    </table>
 </div>
 
 <a class="btn waves-effect waves-light" href="{% url 'profile_update' %}">Modifica il profilo</a>

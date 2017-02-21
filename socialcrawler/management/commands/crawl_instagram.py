@@ -34,7 +34,7 @@ class Command(BaseCommand):
                 post_id = instagram_post["id"]
                 try:
                     post = Post.objects.get(provider="instagram",
-                                               uid=post_id)
+                                            uid=post_id)
                     updated += 1
                 except Post.DoesNotExist:
                     images = instagram_post["images"]

@@ -22,6 +22,6 @@ application = get_wsgi_application()
 
 
 register_signal(1, "worker", crawl_facebook)
-add_timer(1, 30)
+add_timer(1, 3600)
 register_signal(2, "worker", crawl_instagram)
-add_timer(2, 30)
+add_timer(2, 3600)

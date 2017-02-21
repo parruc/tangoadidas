@@ -15,7 +15,7 @@ class Player(AbstractUser):
     @property
     def stars(self):
         points = self.get_points()
-        thresholds = [1, 2, 4, 100, 200]
+        thresholds = [100, 200, 400, 800, 2000]
         stars = 0
         for threshold in thresholds:
             if points > threshold:
