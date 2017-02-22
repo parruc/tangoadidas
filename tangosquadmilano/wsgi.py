@@ -16,7 +16,7 @@ from socialcrawler.apps import crawl_facebook
 from socialcrawler.apps import crawl_instagram
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tangoadidas.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tangosquadmilano.settings")
 
 application = get_wsgi_application()
 
