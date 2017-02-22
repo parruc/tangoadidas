@@ -153,6 +153,23 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+    },
+}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -193,9 +210,11 @@ if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
 else:
+    ADMINS = ["parruc@gmail.com", ]
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "smtp.tangosquadmilano.it"
     EMAIL_HOST_USER = "info@tangosquadmilano.it"
     EMAIL_HOST_PASSWORD = "nYMhDGhudUTctmY4gCtd4N5RRPkdr3"
     EMAIL_PORT = 465
     EMAIL_USE_SSL = True
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
