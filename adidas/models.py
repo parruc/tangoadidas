@@ -4,8 +4,23 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+class Event(models.Model):
+    title = models.CharField("Titolo", max_length=128)
+    date = models.DateField("Data")
+    time = models.TimeField("Ora")
+    place = models.TextField("Luogo")
+
+    class Meta:
+        verbose_name = "Evento"
+        verbose_name_plural = "Eventi"
+
+    def __str__(self):
+        return self.title
+
+
 class Player(AbstractUser):
     is_leader = models.BooleanField(default=False)
+    points = models.ManyToManyField(Event, through='PlayerPoints')
 
     class Meta:
         verbose_name = "Giocatore"
@@ -29,18 +44,13 @@ class Player(AbstractUser):
         return points
 
 
-class Event(models.Model):
-    title = models.CharField("Titolo", max_length=128)
-    date = models.DateField("Data")
-    time = models.TimeField("Ora")
-    place = models.TextField("Luogo")
-
-    class Meta:
-        verbose_name = "Evento"
-        verbose_name_plural = "Eventi"
+class PlayerPoints(models.Model):
+    player = models.ForeignKey(Player)
+    event = models.ForeignKey(Event)
+    points = models.IntegerField("Punti")
 
     def __str__(self):
-        return self.title
+        return "Team " + self.team.name + " for event " + self.team.event.title
 
 
 class Team(models.Model):

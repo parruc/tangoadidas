@@ -1,4 +1,3 @@
-# from django.views.generic.edit import DeleteView
 # from django.shortcuts import render
 #from django.urls import reverse
 from adidas.models import Player
@@ -15,6 +14,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import DetailView
 from django.views.generic import FormView
+from django.views.generic import ListView
 from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 from django.views.generic.detail import SingleObjectMixin
@@ -23,6 +23,11 @@ from django.views.generic.edit import UpdateView
 
 class HomepageView(TemplateView):
     template_name = "adidas/homepage.html"
+
+
+class RankingView(ListView):
+    # TODO campo che calcoli i punti totali
+    queryset = Player.objects.order_by('-points')
 
 
 class ProfileObjMixin(SingleObjectMixin):

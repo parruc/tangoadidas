@@ -23,4 +23,6 @@ urlpatterns = [
         name="profile_view"),
     url(r'^profile/update$', views.ProfileUpdateView.as_view(),
         name="profile_update"),
+    url(r'^ranking$', views.RankingView.as_view(),
+        name="ranking"),
 ]
