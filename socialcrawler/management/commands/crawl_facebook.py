@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = 'Crawls facebook for users posts'
 
     base_url = "https://graph.facebook.com/"
-    tag_name = "tangosquadmilano"
+    tag_name = "#tangosquadmilano"
 
     def handle(self, *args, **options):
         output_partial = "Created {} posts and updated {} posts for user {}"
@@ -29,22 +29,32 @@ class Command(BaseCommand):
             except ValueError:
                 fb_posts = []
             for fb_post in fb_posts:
-                if self.tag_name not in fb_post["tags"]:
+                if self.tag_name not in fb_post.get("message", ""):
                     continue
                 post_id = fb_post["id"]
+                params["id"] = post_id
+                fb_reactions = {"likes": 0, "comments": 0, "sharedposts": 0}
+                for fb_reaction in fb_reactions:
+                    params["reaction"] = fb_reaction
+                    uri = "{id}/{reaction}/?access_token={token}"
+                    url = self.base_url + uri.format(**params)
+                    r = requests.get(url)
+                    try:
+                        fb_reactions[fb_reaction] = len(r.json().get("data", []))
+                    except ValueError:
+                        fb_reactions[fb_reaction] = 0
                 try:
-                    post = Post.objects.get(provider="instagram",
+                    post = Post.objects.get(provider="facebook",
                                             uid=post_id)
                     updated += 1
                 except Post.DoesNotExist:
-                    images = fb_post["images"]
-                    post = Post(uid=post_id, provider="instagram")
+                    post = Post(uid=post_id, provider="facebook")
                     post.player = user
-                    post.text = fb_post["caption"]["text"]
-                    post.image_url = images["standard_resolution"]["url"]
+                    post.text = fb_post["message"]
                     created += 1
-                post.likes = fb_post["likes"]["count"]
-                post.comments = fb_post["comments"]["count"]
+                post.likes = fb_reactions["likes"]
+                post.comments = fb_reactions["comments"]
+                post.shares = fb_reactions["sharedposts"]
                 post.save()
             output = output_partial.format(created, updated, user.username)
             self.stdout.write(output)
