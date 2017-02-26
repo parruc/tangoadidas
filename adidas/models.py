@@ -4,6 +4,11 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format(instance.username, filename)
+
+
 class Event(models.Model):
     title = models.CharField("Titolo", max_length=128)
     date = models.DateField("Data")
@@ -21,6 +26,7 @@ class Event(models.Model):
 class Player(AbstractUser):
     is_leader = models.BooleanField(default=False)
     points = models.ManyToManyField(Event, through='PlayerPoints')
+    image = models.ImageField(upload_to=user_directory_path, null=True, )
 
     class Meta:
         verbose_name = "Giocatore"

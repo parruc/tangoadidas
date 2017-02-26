@@ -53,7 +53,8 @@ class ProfileUpdateView(ProfileObjMixin, UpdateView):
     Uses a form dynamically created for the `Player` model and
     the default model's update template.
     """
-    fields = ["username", ]
+    success_url = reverse_lazy("profile_view")
+    fields = ["username", "image", ]
 
 
 class ProfileDetailView(ProfileObjMixin, DetailView):

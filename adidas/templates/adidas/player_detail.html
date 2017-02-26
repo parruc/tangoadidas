@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load thumbnail static %}
 
 {% block head_title %}Il tuo profilo{% endblock %}
 
@@ -6,6 +7,25 @@
 {% block subtitle %}Qui puoi gestire le tue informazioni personali ed i tuoi account social{% endblock subtitle %}
 
 {% block content %}
+
+<div class="col s12 m8 offset-m2 l6 offset-l3">
+  <div class="card-panel grey lighten-5 z-depth-1">
+    <div class="row valign-wrapper">
+      <div class="col s2">
+          {% thumbnail player.image "50x50" crop="center" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="circle responsive-img"/>
+          {% empty %}
+            <img src="{% static 'adidas/img/no_profile_image_50x50.png' %}" width="50" height="50" class="circle responsive-img"/>
+          {% endthumbnail %}
+      </div>
+      <div class="col s10">
+        <span class="black-text">
+          <h2>Benvenuto {{ player.username }}</h2>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="team-memberships">
     {% for membership in memberships %}
@@ -24,7 +44,7 @@
 
 <div class="social-engagement">
 {% with player.stars as stars %}
-Your social engagement is 
+Your social engagement is
 {% for count in '12345' %}
     {% if forloop.counter > stars %}
          <i class="material-icons grey-text text-lighten-2">star</i>
