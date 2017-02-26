@@ -19,6 +19,9 @@ from .basesettings import DJANGO_SECRET_KEY
 from .basesettings import DJANGO_WSGI_APPLICATION
 from .basesettings import HOST_NAME
 from .basesettings import TEMPLATES_DIRS
+from .basesettings import SMTP_USER
+from .basesettings import SMTP_PASSWORD
+from .basesettings import SMTP_HOST
 
 import os
 
@@ -210,11 +213,12 @@ if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
 else:
-    ADMINS = ["parruc@gmail.com", ]
+    ADMINS = (('Matteo Parrucci', 'parruc@gmail.com'),)
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_HOST = "smtp.tangosquadmilano.it"
-    EMAIL_HOST_USER = "info@tangosquadmilano.it"
-    EMAIL_HOST_PASSWORD = "nYMhDGhudUTctmY4gCtd4N5RRPkdr3"
-    EMAIL_PORT = 465
-    EMAIL_USE_SSL = True
+    EMAIL_HOST = SMTP_HOST
+    EMAIL_HOST_USER = SMTP_USER
+    EMAIL_HOST_PASSWORD = SMTP_PASSWORD
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
     DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+    SERVER_EMAIL = DEFAULT_FROM_EMAIL
