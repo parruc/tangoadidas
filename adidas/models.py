@@ -12,7 +12,7 @@ from django.template.defaultfilters import slugify
 def valid_birth_date(value):
     min_date = value + timedelta(days=16*365.25)
     max_date = value + timedelta(days=25*365.25)
-    if date.today() < min_date or date.today > max_date:
+    if date.today() < min_date or date.today() > max_date:
         raise ValidationError('La tua età deve essere tra 16 e 25 anni',
                               code='birth_date')
 
@@ -59,6 +59,8 @@ class Player(AbstractUser):
     phone_number = models.CharField(validators=[phone_regex], max_length=13,
                                     verbose_name="Numero di telefono",
                                     null=True)
+    team = models.ForeignKey('Team', null=True)
+    date_joined = models.DateField("Data", default=date.today)
 
     class Meta:
         verbose_name = "Giocatore"
@@ -83,18 +85,17 @@ class Player(AbstractUser):
 
 
 class PlayerPoints(models.Model):
-    player = models.ForeignKey(Player)
-    event = models.ForeignKey(Event)
-    points = models.IntegerField("Punti")
+    player = models.ForeignKey('Player', verbose_name="Giocatore")
+    event = models.ForeignKey('Event', verbose_name="Evento")
+    points = models.IntegerField(verbose_name="Punti")
 
     def __str__(self):
-        return "Team " + self.team.name + " for event " + self.team.event.title
+        return "Player {} for event {}".format(self.player.username,
+                                               self.event.title)
 
 
 class Team(models.Model):
     name = models.CharField("Nome", max_length=128)
-    members = models.ManyToManyField('Player', verbose_name='Membri',
-                                     through='TeamMembership')
 
     class Meta:
         verbose_name = "Squadra"
@@ -102,12 +103,3 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class TeamMembership(models.Model):
-    player = models.ForeignKey(Player)
-    team = models.ForeignKey(Team)
-    date_joined = models.DateField("Data", default=date.today)
-
-    def __str__(self):
-        return "Team " + self.team.name + " for event " + self.team.event.title

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load thumbnail static %}
+
+{% block head_title %}Il tuo team{% endblock %}
+
+{% block title %}Il tuo team{% endblock title %}
+{% block subtitle %}Qui puoi vedere gli iscritti al tuo team{% endblock subtitle %}
+
+{% block content %}
+    {% for player in player_list %}
+     {% if forloop.first %}
+     <table>
+         <tr>
+             <th>Picture</th>
+             <th>Username</th>
+         </tr>
+     {% endif %}
+    <tr>
+        <td>
+            <div class="col s2">
+                  {% thumbnail player.image "50x50" crop="center" as im %}
+                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="circle responsive-img"/>
+                  {% empty %}
+                    <img src="{% static 'adidas/img/no_profile_image_50x50.png' %}" width="50" height="50" class="circle responsive-img"/>
+                  {% endthumbnail %}
+              </div>
+          </td>
+        <td>{{ player.username }}</td>
+    </tr>
+    {% if forloop.last %}
+        </table>
+    {% endif %}
+    {% empty %}
+        Non hai ancora una squadra
+    {% endfor %}
+
+{% endblock content %}

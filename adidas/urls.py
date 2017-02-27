@@ -21,8 +21,10 @@ urlpatterns = [
     url(r'^$', views.HomepageView.as_view(), name="homepage"),
     url(r'^accounts/profile/$', views.ProfileDetailView.as_view(),
         name="profile_view"),
-    url(r'^profile/update$', views.ProfileUpdateView.as_view(),
+    url(r'^profile/update/$', views.ProfileUpdateView.as_view(),
         name="profile_update"),
-    url(r'^ranking$', views.RankingView.as_view(),
+    url(r'^team/$', views.TeamView.as_view(),
+        name="team"),
+    url(r'^ranking/$', views.RankingView.as_view(),
         name="ranking"),
 ]

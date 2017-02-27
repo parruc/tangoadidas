@@ -3,17 +3,10 @@ from .models import Event
 from .models import Player
 from .models import PlayerPoints
 from .models import Team
-from .models import TeamMembership
 from django.contrib import admin
 
 
 # from easy_maps.widgets import AddressWithMapWidget
-
-
-class TeamMembershipInline(admin.TabularInline):
-    model = TeamMembership
-    extra = 1
-
 
 class PlayerPointsInline(admin.TabularInline):
     model = PlayerPoints
@@ -31,7 +24,6 @@ class PlayerPointsInline(admin.TabularInline):
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    inlines = (TeamMembershipInline, )
     icon = '<i class="material-icons">supervisor_account</i>'
 
 

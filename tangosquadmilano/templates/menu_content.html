@@ -10,6 +10,12 @@
 <li>
     {% include 'menu_item.html' with url_title=user.username url_name='profile_view' %}
 </li>
+<li>
+    {% include 'menu_item.html' with url_title='Squadra' url_name='team' %}
+</li>
+<li>
+    {% include 'menu_item.html' with url_title='Classifica' url_name='ranking' %}
+</li>
 {% endif %}
 <li>
     {% include 'menu_item.html' with url_title='Esci' url_name='account_logout' %}
