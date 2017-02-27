@@ -54,7 +54,8 @@ class ProfileUpdateView(ProfileObjMixin, UpdateView):
     the default model's update template.
     """
     success_url = reverse_lazy("profile_view")
-    fields = ["username", "image", ]
+    fields = ["first_name", "last_name", "birth_date", "username", "image",
+              "phone_number"]
 
 
 class ProfileDetailView(ProfileObjMixin, DetailView):

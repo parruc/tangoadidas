@@ -18,10 +18,10 @@ from .basesettings import DJANGO_ROOT_URL
 from .basesettings import DJANGO_SECRET_KEY
 from .basesettings import DJANGO_WSGI_APPLICATION
 from .basesettings import HOST_NAME
-from .basesettings import TEMPLATES_DIRS
-from .basesettings import SMTP_USER
-from .basesettings import SMTP_PASSWORD
 from .basesettings import SMTP_HOST
+from .basesettings import SMTP_PASSWORD
+from .basesettings import SMTP_USER
+from .basesettings import TEMPLATES_DIRS
 
 import os
 
@@ -43,7 +43,6 @@ ALLOWED_HOSTS = [HOST_NAME, ]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = DEVELOPMENT
-TEMPLATE_DEBUG = DEBUG
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -66,6 +65,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.instagram',
+    'easy_maps',
     'material',
     'material.frontend',
     'material.admin',
@@ -101,6 +101,7 @@ TEMPLATES = [
         'DIRS': TEMPLATES_DIRS,
         'APP_DIRS': True,
         'OPTIONS': {
+            'debug': DEBUG,
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.template.context_processors.debug',
@@ -214,6 +215,9 @@ CACHES = {
         'LOCATION': 'memcached:11211',
     }
 }
+
+EASY_MAPS_GOOGLE_MAPS_API_KEY = "AIzaSyALBrM-uQXi5NufSR7TOdHgiHH2f-pRBkY"
+
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
