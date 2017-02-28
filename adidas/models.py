@@ -7,6 +7,11 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 from django.template.defaultfilters import slugify
+from uuid import uuid1
+
+
+def generate_uid():
+    return uuid1().hex
 
 
 def valid_birth_date(value):
@@ -103,6 +108,8 @@ class PlayerPointsInEvent(models.Model):
 
 class Team(models.Model):
     name = models.CharField("Nome", max_length=128)
+    hash = models.CharField("Codice adesione", max_length=50,
+                            default=generate_uid)
 
     class Meta:
         verbose_name = "Squadra"

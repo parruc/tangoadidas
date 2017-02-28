@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load thumbnail static %}
+{% load thumbnail static material_form %}
 
 {% block head_title %}Il tuo team{% endblock %}
 
@@ -7,12 +7,16 @@
 {% block subtitle %}Qui puoi vedere gli iscritti al tuo team{% endblock subtitle %}
 
 {% block content %}
+{% if request.user.team %}
     {% for player in player_list %}
      {% if forloop.first %}
      <table>
          <tr>
-             <th>Picture</th>
+             <th>Immagine</th>
              <th>Username</th>
+             {% if request.user.is_leader %}
+                <th>Azioni</th>
+             {% endif %}
          </tr>
      {% endif %}
     <tr>
@@ -26,12 +30,26 @@
               </div>
           </td>
         <td>{{ player.username }}</td>
+        {% if request.user.is_leader %}
+          <td>
+            <a class="btn waves-effect waves-light" href="TODO">Elimina dalla squadra</a>
+          </td>
+        {% endif %}
     </tr>
     {% if forloop.last %}
         </table>
     {% endif %}
-    {% empty %}
-        Non hai ancora una squadra
     {% endfor %}
+    {% if not request.user.is_leader %}
+        <a class="btn waves-effect waves-light" href="{% url 'team_leave' %}">Abbandona la squadra</a>
+    {% endif %}
+{% else %}
+
+    <form method="POST" action="{% url 'team_join' %}">
+      {% csrf_token %}
+      {% form form=join_team_form %}{% endform %}
+      <button class="btn waves-effect waves-light" type="submit">Invia<i class="material-icons right">send</i></button>
+    </form>
+{% endif %}
 
 {% endblock content %}

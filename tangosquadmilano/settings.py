@@ -179,6 +179,9 @@ LOGGING = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
+LANGUAGES = (
+    ('it', 'Italiano'),
+)
 LANGUAGE_CODE = 'it'
 
 TIME_ZONE = 'UTC'

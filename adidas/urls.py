@@ -13,18 +13,31 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from adidas import views
+from adidas.views import HomepageView
+from adidas.views import ProfileDetailView
+from adidas.views import ProfileUpdateView
+from adidas.views import RankingView
+from adidas.views import TeamDetailView
+from adidas.views import TeamJoinByHashView
+from adidas.views import TeamJoinView
+from adidas.views import TeamLeaveView
 from django.conf.urls import url
 
 
 urlpatterns = [
-    url(r'^$', views.HomepageView.as_view(), name="homepage"),
-    url(r'^accounts/profile/$', views.ProfileDetailView.as_view(),
+    url(r'^$', HomepageView.as_view(), name="homepage"),
+    url(r'^accounts/profile/$', ProfileDetailView.as_view(),
         name="profile_view"),
-    url(r'^profile/update/$', views.ProfileUpdateView.as_view(),
+    url(r'^profile/update/$', ProfileUpdateView.as_view(),
         name="profile_update"),
-    url(r'^team/$', views.TeamView.as_view(),
-        name="team"),
-    url(r'^ranking/$', views.RankingView.as_view(),
+    url(r'^team/$', TeamDetailView.as_view(),
+        name="team_view"),
+    url(r'^team/join/$', TeamJoinView.as_view(),
+        name="team_join"),
+    url(r'^team/join/(?P<hash>\w+)/$', TeamJoinByHashView.as_view(),
+        name="team_join_hash"),
+    url(r'^team/leave/$', TeamLeaveView.as_view(),
+        name="team_leave"),
+    url(r'^ranking/$', RankingView.as_view(),
         name="ranking"),
 ]
