@@ -2,6 +2,7 @@
 #from django.urls import reverse
 from adidas.models import Player
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
@@ -21,14 +22,13 @@ class TeamView(ListView):
 
     def get_queryset(self):
         """Return's the current user team players."""
-        import ipdb; ipdb.set_trace()
         return self.request.user.team.player_set.all()
 
 
 class RankingView(ListView):
     template_name = "adidas/ranking.html"
     model = Player
-    queryset = Player.objects.order_by('-points')
+    queryset = Player.objects.annotate(points_sum=Sum('playerpointsinevent__points')).order_by('points_sum')
 
 
 class ProfileObjMixin(SingleObjectMixin):

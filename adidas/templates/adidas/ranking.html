@@ -29,7 +29,7 @@
               </div>
           </td>
         <td>{{ player.username }}</td>
-        <td>{{ player.points }}</td>
+        <td>{{ player.points_sum|default_if_none:'0' }}</td>
     </tr>
     {% if forloop.last %}
         </table>

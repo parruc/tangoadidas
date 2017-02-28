@@ -21,7 +21,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tangosquadmilano.settings")
 application = get_wsgi_application()
 
 
-register_signal(1, "worker", crawl_facebook)
+register_signal(1, "mule0", crawl_facebook)
 add_timer(1, 3600)
-register_signal(2, "worker", crawl_instagram)
+register_signal(2, "mule0", crawl_instagram)
 add_timer(2, 3600)

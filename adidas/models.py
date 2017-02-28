@@ -52,8 +52,8 @@ class Player(AbstractUser):
     is_leader = models.BooleanField(default=False)
     birth_date = models.DateField('Data di nascita', default=date.today,
                                   validators=[valid_birth_date, ])
-    points = models.ManyToManyField('Event', verbose_name="Punti",
-                                    through='PlayerPoints')
+    points_in_event = models.ManyToManyField('Event', verbose_name="Punti",
+                                             through='PlayerPointsInEvent')
     image = models.ImageField("Immagine del profili",
                               upload_to=user_directory_path, null=True, )
     phone_number = models.CharField(validators=[phone_regex], max_length=13,
@@ -69,7 +69,7 @@ class Player(AbstractUser):
 
     @property
     def stars(self):
-        points = self.get_points()
+        points = self.get_social_points()
         thresholds = [60, 180, 400, 800, 1000]
         stars = 0
         for threshold in thresholds:
@@ -77,14 +77,21 @@ class Player(AbstractUser):
                 stars += 1
         return stars
 
-    def get_points(self):
+    @property
+    def events_points(self):
+        points = 0
+        for point in self.points_in_event:
+            points += point
+        return points
+
+    def get_social_points(self):
         points = 0
         for post in self.post_set.all():
             points += post.points
         return points
 
 
-class PlayerPoints(models.Model):
+class PlayerPointsInEvent(models.Model):
     player = models.ForeignKey('Player', verbose_name="Giocatore")
     event = models.ForeignKey('Event', verbose_name="Evento")
     points = models.IntegerField(verbose_name="Punti")

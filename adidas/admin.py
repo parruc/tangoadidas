@@ -1,15 +1,15 @@
 # from django import forms
 from .models import Event
 from .models import Player
-from .models import PlayerPoints
+from .models import PlayerPointsInEvent
 from .models import Team
 from django.contrib import admin
 
 
 # from easy_maps.widgets import AddressWithMapWidget
 
-class PlayerPointsInline(admin.TabularInline):
-    model = PlayerPoints
+class PlayerPointsInEventInline(admin.TabularInline):
+    model = PlayerPointsInEvent
     extra = 1
 
 
@@ -35,5 +35,5 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
-    inlines = (PlayerPointsInline, )
+    inlines = (PlayerPointsInEventInline, )
     icon = '<i class="material-icons">person_pin</i>'
