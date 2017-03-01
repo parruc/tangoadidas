@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load thumbnail static easy_maps_tags%}
+
+{% block head_title %}Gli eventi in programma{% endblock %}
+
+{% block title %}Gli eventi in programma{% endblock title %}
+{% block subtitle %}Qui puoi vedere gli eventi in programma e, se sei un capitanto, iscrivere la tua squadra{% endblock subtitle %}
+
+{% block content %}
+{% for event in events %}
+     <div class="event">
+         <h2>{{ event.title }}</h2>
+         <p>{{ event.description }}</p>
+         <div class="map">{% easy_map event.place 300 400 %}</div>
+         <div class="image">
+             {% thumbnail event.image "150x150" crop="center" as im %}
+               <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="circle responsive-img"/>
+             {% empty %}
+               <img src="{% static 'adidas/img/no_profile_image_150x150.png' %}" width="150" height="150" class="circle responsive-img"/>
+             {% endthumbnail %}
+         </div>
+         <div class="start">
+            {{ event.start_date|date:"D d m" }} {{ event.start_time|time:"H:i" }}
+         </div>
+         <div class="end">
+            {{ event.end_date|date:"D d m" }} {{ event.end_time|time:"H:i" }}
+         </div>
+         {% if self.request.user.is_leader %}
+            {% if self.request.user.team in event.allowed_teams %}
+                {% if self.request.user.team not in event.teams %}
+                    <div class="action">SUBSCRIBE</div>
+                {% else %}
+                    <div class="action">UNSUBSCRIBE</div>
+                {% endif %}
+            {% else %}
+                <div class="action">NOT ALLOWED</div>
+            {% endif %}
+        {% endif %}
+     </div>
+{% endfor %}
+{% endblock content %}

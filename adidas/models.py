@@ -37,11 +37,14 @@ class Event(models.Model):
     image = models.ImageField("Immagine del'evento",
                               upload_to=event_directory_path, null=True, )
     start_date = models.DateField("Data di inizio", default=date.today)
-    end_date = models.DateField("Data di fine", default=date.today)
     start_time = models.TimeField("Ora di inizio", default=datetime.now)
+    end_date = models.DateField("Data di fine", default=date.today)
     end_time = models.TimeField("Ora di fine", default=datetime.now)
     allowed_teams = models.ManyToManyField('Team',
+                                           related_name="allowed_teams",
                                            verbose_name="Squadre abilitate", )
+    teams = models.ManyToManyField('Team',
+                                   verbose_name="Squadre iscritte", )
 
     class Meta:
         verbose_name = "Evento"

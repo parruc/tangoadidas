@@ -1,3 +1,4 @@
+from adidas.views.events import EventsView
 from adidas.views.generic import HomepageView
 from adidas.views.mixins import LoginRequiredMixin
 from adidas.views.mixins import ProfileObjectMixin
@@ -9,6 +10,8 @@ from adidas.views.team import TeamJoinByHashView
 from adidas.views.team import TeamJoinView
 from adidas.views.team import TeamLeaveView
 
+
+EventsView
 
 HomepageView
 

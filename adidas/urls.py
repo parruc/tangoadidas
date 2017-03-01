@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from adidas.views import EventsView
 from adidas.views import HomepageView
 from adidas.views import ProfileDetailView
 from adidas.views import ProfileUpdateView
@@ -40,4 +41,6 @@ urlpatterns = [
         name="team_leave"),
     url(r'^ranking/$', RankingView.as_view(),
         name="ranking"),
+    url(r'^events/$', EventsView.as_view(),
+        name="events"),
 ]
