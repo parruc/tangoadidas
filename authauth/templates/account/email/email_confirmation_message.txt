@@ -1,0 +1,8 @@
+{% load account %}{% user_display user as user_display %}{% autoescape off %}Ciao {{ user_display }},
+
+Per completare la creazione del tuo account sul sito {{ current_site.domain }}, devi confermare di essere il titolare di questo indirizzo e-mail:
+
+
+Per confermare il tuo indirizzo email vai all'indirizzo: {{ activate_url }}
+{% endblocktrans %}{% endautoescape %}
+Grazie dal team di {{ current_site.name }}!
