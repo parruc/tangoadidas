@@ -43,7 +43,7 @@ class Event(models.Model):
     allowed_teams = models.ManyToManyField('Team',
                                            related_name="allowed_teams",
                                            verbose_name="Squadre abilitate", )
-    teams = models.ManyToManyField('Team', blank=True, null=True,
+    teams = models.ManyToManyField('Team', blank=True,
                                    verbose_name="Squadre iscritte")
 
     class Meta:

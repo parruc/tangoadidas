@@ -13,15 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from adidas.views import EventsView
-from adidas.views import HomepageView
-from adidas.views import ProfileDetailView
-from adidas.views import ProfileUpdateView
-from adidas.views import RankingView
-from adidas.views import TeamDetailView
-from adidas.views import TeamJoinByHashView
-from adidas.views import TeamJoinView
-from adidas.views import TeamLeaveView
+from adidas.views.shortcuts import EventJoinView
+from adidas.views.shortcuts import EventsView
+from adidas.views.shortcuts import HomepageView
+from adidas.views.shortcuts import ProfileDetailView
+from adidas.views.shortcuts import ProfileUpdateView
+from adidas.views.shortcuts import RankingView
+from adidas.views.shortcuts import TeamDetailView
+from adidas.views.shortcuts import TeamJoinByHashView
+from adidas.views.shortcuts import TeamJoinView
+from adidas.views.shortcuts import TeamLeaveView
 from django.conf.urls import url
 
 
@@ -43,4 +44,6 @@ urlpatterns = [
         name="ranking"),
     url(r'^events/$', EventsView.as_view(),
         name="events"),
+    url(r'^event/join/$', EventJoinView.as_view(),
+        name="event_join"),
 ]

@@ -1,3 +1,4 @@
+from adidas.models import Event
 from django import forms
 
 
@@ -6,3 +7,8 @@ class JoinTeamForm(forms.Form):
                            max_length=32,
                            min_length=32,
                            required=True)
+
+
+class JoinEventForm(forms.Form):
+    event = forms.ModelChoiceField(queryset=Event.objects.all(),
+                                   widget=forms.HiddenInput())

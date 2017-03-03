@@ -4,5 +4,5 @@ Per completare la creazione del tuo account sul sito {{ current_site.domain }}, 
 
 
 Per confermare il tuo indirizzo email vai all'indirizzo: {{ activate_url }}
-{% endblocktrans %}{% endautoescape %}
+{% endautoescape %}
 Grazie dal team di {{ current_site.name }}!

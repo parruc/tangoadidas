@@ -1,10 +1,10 @@
 from adidas.models import Player
-from django.contrib.auth.mixins import LoginRequiredMixin as BLoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin as BaseLoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.detail import SingleObjectMixin
 
 
-class LoginRequiredMixin(BLoginRequiredMixin):
+class CustomLoginRequiredMixin(BaseLoginRequiredMixin):
     login_url = reverse_lazy('account_login')
 
 

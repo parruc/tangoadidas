@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load thumbnail static easy_maps_tags%}
+{% load thumbnail static easy_maps_tags material_form %}
 
 {% block head_title %}Gli eventi in programma{% endblock %}
 
@@ -9,31 +9,35 @@
 {% block content %}
 {% for event in event_list %}
      <div class="event">
-         <h2>{{ event.title }}</h2>
-         <p>{{ event.description }}</p>
-         <div class="map">{% easy_map event.place 300 400 %}</div>
-         <div class="image">
+         <div class="left image">
              {% thumbnail event.image "150x150" crop="center" as im %}
                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="circle responsive-img"/>
              {% empty %}
                <img src="{% static 'adidas/img/no_profile_image_150x150.png' %}" width="150" height="150" class="circle responsive-img"/>
              {% endthumbnail %}
          </div>
+         <h2>{{ event.title }}</h2>
+         <p>{{ event.description }}</p>
+         <div class="map">{% easy_map event.place %}</div>
          <div class="start">
             {{ event.start_date|date:"D d m" }} {{ event.start_time|time:"H:i" }}
          </div>
          <div class="end">
             {{ event.end_date|date:"D d m" }} {{ event.end_time|time:"H:i" }}
          </div>
-         {% if self.request.user.is_leader %}
-            {% if self.request.user.team in event.allowed_teams %}
-                {% if self.request.user.team not in event.teams %}
-                    <div class="action">SUBSCRIBE</div>
-                {% else %}
+         {% if request.user.is_leader %}
+            {% if event.is_my_team_allowed %}
+                {% if event.is_my_team_registred %}
                     <div class="action">UNSUBSCRIBE</div>
+                {% else %}
+                    <form method="POST" action="{% url 'event_join' %}">
+                      {% csrf_token %}
+                      {% form form=join_team_form %}{% endform %}
+                      <button class="btn waves-effect waves-light" type="submit">Iscrivi la squadra<i class="material-icons right">send</i></button>
+                    </form>
                 {% endif %}
             {% else %}
-                <div class="action">NOT ALLOWED</div>
+                <div class="action">La tua squadra non è stata invitata a questo evento.</div>
             {% endif %}
         {% endif %}
      </div>

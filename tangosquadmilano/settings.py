@@ -59,6 +59,7 @@ SECRET_KEY = DJANGO_SECRET_KEY
 # Application definition
 
 INSTALLED_APPS = [
+    'adidas',
     'authauth',
     'allauth',
     'allauth.account',
@@ -78,7 +79,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'compressor',
     'sorl.thumbnail',
-    'adidas',
     'socialcrawler',
 ]
 
