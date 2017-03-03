@@ -1,6 +1,6 @@
-from adidas.forms import JoinEventForm
+from adidas.forms import JoinWithdrawEventForm
 from adidas.models import Event
-from adidas.views.shortcuts import LoginRequiredMixin
+from adidas.views.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -21,34 +21,58 @@ class EventsView(ListView):
             return context
         team = self.request.user.team
         for event in context["event_list"]:
-            event.is_my_team_allowed = event.is_my_teams_registred = False
+            is_my_team_allowed = is_my_teams_registred = False
             if team in event.allowed_teams.all():
-                event.is_my_team_allowed = True
+                is_my_team_allowed = True
             if team in event.teams.all():
-                event.is_my_teams_registred = True
+                is_my_teams_registred = True
+            if is_my_team_allowed and not is_my_teams_registred:
+                event.can_join = True
+            if is_my_team_allowed and is_my_teams_registred:
+                event.can_witwdraw = True
+            form = JoinWithdrawEventForm(initial={'hash': event.hash})
+            event.joinwithdraw_event_form = form
         return context
 
 
-class EventJoinView(FormView, LoginRequiredMixin):
-    form_class = JoinEventForm
+class EventJoinWithdrawView(LoginRequiredMixin, FormView):
+    form_class = JoinWithdrawEventForm
     success_url = reverse_lazy("events")
+    ok_message = "Hai {action} la tua squadra all\'evento {title}."
+    ko_message = "Non è stato possibile {action} la tua squadra all'evento {title}."
+
+    def dispatch(self, request, *args, **kwargs):
+        self.action = self.kwargs.get('action', "")
+        if self.action == "join":
+            self.ok_action = "iscritto"
+            self.ko_action = "iscrivere"
+        if self.action == "withdraw":
+            self.ok_action = "disiscritto"
+            self.ko_action = "disiscrivere"
+        return super(EventJoinWithdrawView, self).dispatch(request,
+                                                           *args, **kwargs)
 
     def form_valid(self, form):
-        event = form.cleaned_data.get('event', "")
+        hash = form.cleaned_data.get('hash', "")
+        event = Event.objects.filter(hash=hash).first()
         team = self.request.user.team
         if event and team:
-            event.teams.add(team)
+            if self.action == "join":
+                event.teams.add(team)
+            elif self.action == "withdraw":
+                event.teams.remove(team)
             event.save()
             messages.add_message(self.request, messages.INFO,
-                                 'Hai iscritto la tua squadra all\'evento')
+                                 self.ok_message.format(title=event.title,
+                                                        action=self.ok_action))
         else:
             messages.add_message(self.request, messages.ERROR,
-                                 'Non è stato possibile iscrivere la tua '
-                                 'squadra all\'evento.')
+                                 self.ko_message.format(title=event.title,
+                                                        action=self.ko_action))
         return redirect(reverse("events"))
 
     def form_invalid(self, form):
         messages.add_message(self.request, messages.ERROR,
-                             'Non è stato possibile iscrivere la tua '
-                             'squadra all\'evento.')
+                             self.ko_message.format(title="",
+                                                    action=self.ko_action))
         return redirect(self.success_url)

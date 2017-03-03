@@ -1,7 +1,6 @@
 {% extends "account/base.html" %}
 
-{% load i18n %}
-{% load material_form %}
+{% load i18n material_frontend %}
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
@@ -10,8 +9,26 @@
 <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
 
 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-  {% csrf_token %}
-  {% form form=form %}{% endform %}
+    {% csrf_token %}
+    <div class="row">
+        {{ form.username|materialize:"s6" }}
+        {{ form.email|materialize:"s6" }}
+    </div>
+    <div class="row">
+        {{ form.password1|materialize:"s6" }}
+        {{ form.password2|materialize:"s6" }}
+    </div>
+    <div class="row">
+        {{ form.first_name|materialize:"s6" }}
+        {{ form.last_name|materialize:"s6" }}
+    </div>
+    <div class="row">
+        {{ form.birth_date|materialize:"s12" }}
+    </div>
+    <div class="row">
+        {{ form.image|materialize:"s6" }}
+        {{ form.phone_numer|materialize:"s6" }}
+    </div>
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}

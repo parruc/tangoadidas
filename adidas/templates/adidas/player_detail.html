@@ -17,23 +17,24 @@
           {% empty %}
             <img src="{% static 'adidas/img/no_profile_image_150x150.png' %}" width="150" height="150" class="circle responsive-img"/>
           {% endthumbnail %}
+          <div class="social-engagement">
+          Hai {{ player.stars }} <i class="material-icons grey-text text-lighten-2">star</i> per la personalità Tango League
+          </div>
       </div>
-      <div class="col s10">
-        <span class="black-text">
-          <h2>Benvenuto {{ player.username }}</h2>
-        </span>
+      <div class="col s8">
+          <h2>Benvenuto {{ player.username }} </h2>
+          <div class="email">Indirizzo email {{ player.email }}</div>
       </div>
+      <div class="col s2">
+          <a class="btn waves-effect waves-light" href="{% url 'profile_update' %}">Profilo<i class="material-icons left">mode_edit</i></a>
+          <a class="btn waves-effect waves-light" href="{% url 'account_email' %}">Email<i class="material-icons left">mode_edit</i></a>
+          <a class="btn waves-effect waves-light" href="{% url 'account_change_password' %}">Password<i class="material-icons left">mode_edit</i></a>
+          <a class="btn waves-effect waves-light" href="{% url 'socialaccount_connections' %}">Social<i class="material-icons left">mode_edit</i></a>
+          {% if player.is_captain %}
+          <a class="btn waves-effect waves-light" href="{% url 'team_update' %}">Team<i class="material-icons left">mode_edit</i></a>
+          {% endif %}
+
     </div>
   </div>
 </div>
-
-
-<div class="social-engagement">
-Your social engagement is {{ player.stars }} <i class="material-icons grey-text text-lighten-2">star</i>
-</div>
-
-<a class="btn waves-effect waves-light" href="{% url 'profile_update' %}">Modifica il profilo</a>
-<a class="btn waves-effect waves-light" href="{% url 'account_change_password' %}">Cambia la password</a>
-<a class="btn waves-effect waves-light" href="{% url 'account_email' %}">Cambia la mail</a>
-<a class="btn waves-effect waves-light" href="{% url 'socialaccount_connections' %}">Connetti profili social</a>
 {% endblock %}

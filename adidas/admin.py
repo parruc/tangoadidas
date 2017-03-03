@@ -23,11 +23,13 @@ class EventAdminForm(forms.ModelForm):
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
+    readonly_fields = ('hash', )
     icon = '<i class="material-icons">supervisor_account</i>'
 
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
+    readonly_fields = ('hash', )
     form = EventAdminForm
     icon = '<i class="material-icons">schedule</i>'
 

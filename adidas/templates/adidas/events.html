@@ -25,19 +25,19 @@
          <div class="end">
             {{ event.end_date|date:"D d m" }} {{ event.end_time|time:"H:i" }}
          </div>
-         {% if request.user.is_leader %}
-            {% if event.is_my_team_allowed %}
-                {% if event.is_my_team_registred %}
-                    <div class="action">UNSUBSCRIBE</div>
-                {% else %}
-                    <form method="POST" action="{% url 'event_join' %}">
-                      {% csrf_token %}
-                      {% form form=join_team_form %}{% endform %}
-                      <button class="btn waves-effect waves-light" type="submit">Iscrivi la squadra<i class="material-icons right">send</i></button>
-                    </form>
-                {% endif %}
-            {% else %}
-                <div class="action">La tua squadra non è stata invitata a questo evento.</div>
+         {% if request.user.is_captain %}
+            {% if event.can_witwdraw %}
+                <form method="POST" action="{% url 'event_join_withdraw' 'withdraw' %}">
+                    {% csrf_token %}
+                    {% form form=event.joinwithdraw_event_form %}{% endform %}
+                    <button class="btn waves-effect waves-light" type="submit">Disiscrivi la squadra<i class="material-icons right">cross</i></button>
+                </form>
+            {% elif event.can_join %}
+                <form method="POST" action="{% url 'event_join_withdraw' 'join' %}">
+                    {% csrf_token %}
+                    {% form form=event.joinwithdraw_event_form %}{% endform %}
+                    <button class="btn waves-effect waves-light" type="submit">Iscrivi la squadra<i class="material-icons right">send</i></button>
+                </form>
             {% endif %}
         {% endif %}
      </div>

@@ -3,19 +3,19 @@
 
 {% block head_title %}Il tuo team{% endblock %}
 
-{% block title %}Il tuo team{% endblock title %}
+{% block title %}Team {{ team.name }}{% endblock title %}
 {% block subtitle %}Qui puoi vedere gli iscritti al tuo team{% endblock subtitle %}
 
 {% block content %}
-{% if request.user.team %}
-    {% for player in player_list %}
+{% if team %}
+    {% for player in team.player_set.all %}
      {% if forloop.first %}
      <table>
          <tr>
              <th>Immagine</th>
              <th>Username</th>
-             {% if request.user.is_leader %}
-                <th>Azioni</th>
+             {% if request.user.is_captain %}
+                <th></th>
              {% endif %}
          </tr>
      {% endif %}
@@ -30,17 +30,19 @@
               </div>
           </td>
         <td>{{ player.username }}</td>
-        {% if request.user.is_leader %}
-          <td>
-            <a class="btn waves-effect waves-light" href="TODO">Elimina dalla squadra</a>
-          </td>
+        <td>
+        {% if request.user.is_captain %}
+            {% if request.user != player %}
+              <a class="btn waves-effect waves-light" href="TODO">Elimina dalla squadra</a>
+            {% endif %}
         {% endif %}
+        </td>
     </tr>
     {% if forloop.last %}
         </table>
     {% endif %}
     {% endfor %}
-    {% if not request.user.is_leader %}
+    {% if not request.user.is_captain %}
         <a class="btn waves-effect waves-light" href="{% url 'team_leave' %}">Abbandona la squadra</a>
     {% endif %}
 {% else %}
@@ -50,6 +52,23 @@
       {% form form=join_team_form %}{% endform %}
       <button class="btn waves-effect waves-light" type="submit">Invia<i class="material-icons right">send</i></button>
     </form>
+{% endif %}
+
+{% if request.user.is_captain %}
+    <div class="invite">
+        <p>
+            Per invitare altri giocatori ad unirsi alla tua squadra dovranno registrarsi sul sito e:
+        </p>
+        <ul class="browser-default">
+            <li>
+                inserire questo codice: {{ request.user.team.hash }} nella pagina "Squadra"
+            </li>
+            <li>
+                visitare <a href="{% url 'team_join_hash' request.user.team.hash %}">questo indirizzo</a>.
+            </li>
+
+        </ul>
+    </div>
 {% endif %}
 
 {% endblock content %}

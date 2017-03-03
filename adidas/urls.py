@@ -13,16 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from adidas.views.shortcuts import EventJoinView
-from adidas.views.shortcuts import EventsView
-from adidas.views.shortcuts import HomepageView
-from adidas.views.shortcuts import ProfileDetailView
-from adidas.views.shortcuts import ProfileUpdateView
-from adidas.views.shortcuts import RankingView
-from adidas.views.shortcuts import TeamDetailView
-from adidas.views.shortcuts import TeamJoinByHashView
-from adidas.views.shortcuts import TeamJoinView
-from adidas.views.shortcuts import TeamLeaveView
+from adidas.views.events import EventJoinWithdrawView
+from adidas.views.events import EventsView
+from adidas.views.generic import HomepageView
+from adidas.views.player import ProfileDetailView
+from adidas.views.player import ProfileUpdateView
+from adidas.views.player import RankingView
+from adidas.views.team import TeamDetailView
+from adidas.views.team import TeamJoinByHashView
+from adidas.views.team import TeamJoinView
+from adidas.views.team import TeamLeaveView
+from adidas.views.team import TeamUpdateView
 from django.conf.urls import url
 
 
@@ -34,6 +35,8 @@ urlpatterns = [
         name="profile_update"),
     url(r'^team/$', TeamDetailView.as_view(),
         name="team_view"),
+    url(r'^team/update/$', TeamUpdateView.as_view(),
+        name="team_update"),
     url(r'^team/join/$', TeamJoinView.as_view(),
         name="team_join"),
     url(r'^team/join/(?P<hash>\w+)/$', TeamJoinByHashView.as_view(),
@@ -44,6 +47,6 @@ urlpatterns = [
         name="ranking"),
     url(r'^events/$', EventsView.as_view(),
         name="events"),
-    url(r'^event/join/$', EventJoinView.as_view(),
-        name="event_join"),
+    url(r'^event/(?P<action>(join|withdraw))/$', EventJoinWithdrawView.as_view(),
+        name="event_join_withdraw"),
 ]

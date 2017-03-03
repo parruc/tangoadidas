@@ -45,6 +45,8 @@ class Event(models.Model):
                                            verbose_name="Squadre abilitate", )
     teams = models.ManyToManyField('Team', blank=True,
                                    verbose_name="Squadre iscritte")
+    hash = models.CharField("Codice adesione", max_length=50,
+                            default=generate_uid)
 
     class Meta:
         verbose_name = "Evento"
@@ -57,13 +59,13 @@ class Event(models.Model):
 class Player(AbstractUser):
     phone_regex = RegexValidator(regex=r'^\d{7,13}$',
                                  message="Numero di telefono non valido.")
-    is_leader = models.BooleanField(default=False)
+    is_captain = models.BooleanField(default=False)
     birth_date = models.DateField('Data di nascita', default=date.today,
                                   validators=[valid_birth_date, ])
     points_in_event = models.ManyToManyField('Event', verbose_name="Punti",
                                              through='PlayerPointsInEvent')
     image = models.ImageField("Immagine del profili",
-                              upload_to=user_directory_path, null=True, )
+                              upload_to=user_directory_path, null=True, blank=True)
     phone_number = models.CharField(validators=[phone_regex], max_length=13,
                                     verbose_name="Numero di telefono",
                                     null=True)

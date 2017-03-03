@@ -140,6 +140,7 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = "[TangoAdidasMilano.it]"
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 SOCIALACCOUNT_AUTO_SIGNUP = False
+ACCOUNT_SIGNUP_FORM_CLASS='authauth.forms.AdidasSignupForm'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -209,7 +210,7 @@ STATICFILES_FINDERS = (
 )
 
 COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),
+    ('text/less', '/project/bin/lesscpy {infile} {outfile}'),
 )
 
 CACHES = {
@@ -221,6 +222,7 @@ CACHES = {
 
 EASY_MAPS_GOOGLE_MAPS_API_KEY = "AIzaSyALBrM-uQXi5NufSR7TOdHgiHH2f-pRBkY"
 
+CAPTAIN_EMAILS = ["parruc@gmail.com", ]
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

@@ -1,6 +1,6 @@
 from adidas.models import Player
-from adidas.views.shortcuts import LoginRequiredMixin
-from adidas.views.shortcuts import ProfileObjectMixin
+from adidas.views.mixins import LoginRequiredMixin
+from adidas.views.mixins import PlayerObjectMixin
 from django.db.models import Sum
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
@@ -14,7 +14,7 @@ class RankingView(ListView, LoginRequiredMixin):
     queryset = Player.objects.annotate(points_sum=Sum('playerpointsinevent__points')).order_by('points_sum')
 
 
-class ProfileUpdateView(ProfileObjectMixin, LoginRequiredMixin, UpdateView):
+class ProfileUpdateView(LoginRequiredMixin, PlayerObjectMixin, UpdateView):
     """
     A view that displays a form for editing a user's profile.
 
@@ -26,7 +26,7 @@ class ProfileUpdateView(ProfileObjectMixin, LoginRequiredMixin, UpdateView):
               "phone_number"]
 
 
-class ProfileDetailView(ProfileObjectMixin, LoginRequiredMixin, DetailView):
+class ProfileDetailView(LoginRequiredMixin, PlayerObjectMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ProfileDetailView, self).get_context_data(**kwargs)

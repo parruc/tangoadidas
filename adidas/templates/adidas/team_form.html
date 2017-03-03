@@ -1,0 +1,18 @@
+{% extends "account/base.html" %}
+
+{% load material_form %}
+
+{% block head_title %}Modifica la tua squadra{% endblock %}
+
+{% block title %}Modifica la tua squadra{% endblock %}
+{% block subtitle %}In questa pagina potrai cambiare le informazioni della tua squadra{% endblock %}
+
+{% block content %}
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% form form=form %}{% endform %}
+  <button class="btn waves-effect waves-light" type="submit">Salva <i class="material-icons right">send</i></button>
+</form>
+
+{% endblock %}
