@@ -33,7 +33,11 @@
         <td>
         {% if request.user.is_captain %}
             {% if request.user != player %}
-              <a class="btn waves-effect waves-light" href="TODO">Elimina dalla squadra</a>
+            <form method="POST" action="{% url 'team_remove' %}">
+              {% csrf_token %}
+              {% form form=team_remove_form %}{% endform %}
+              <button class="btn waves-effect waves-light" type="submit">Rimuovi dal team<i class="material-icons right">send</i></button>
+            </form>
             {% endif %}
         {% endif %}
         </td>

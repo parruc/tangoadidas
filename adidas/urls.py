@@ -23,6 +23,7 @@ from adidas.views.team import TeamDetailView
 from adidas.views.team import TeamJoinByHashView
 from adidas.views.team import TeamJoinView
 from adidas.views.team import TeamLeaveView
+from adidas.views.team import TeamRemoveView
 from adidas.views.team import TeamUpdateView
 from django.conf.urls import url
 
@@ -39,6 +40,8 @@ urlpatterns = [
         name="team_update"),
     url(r'^team/join/$', TeamJoinView.as_view(),
         name="team_join"),
+    url(r'^team/remove/$', TeamRemoveView.as_view(),
+        name="team_remove"),
     url(r'^team/join/(?P<hash>\w+)/$', TeamJoinByHashView.as_view(),
         name="team_join_hash"),
     url(r'^team/leave/$', TeamLeaveView.as_view(),
