@@ -50,16 +50,22 @@ class TeamJoinByHashView(LoginRequiredMixin, View):
     def dispatch(self, *args, **kwargs):
         hash = self.kwargs.get('hash', "")
         team = Team.objects.filter(hash=hash).first()
-        if team:
-            player = self.request.user
-            player.team = team
-            player.save()
-            messages.add_message(self.request, messages.INFO,
-                                 'Ti sei unito alla squadra')
+        player = self.request.user
+        if player.is_authenticated:
+            if team:
+                player.team = team
+                player.save()
+                messages.add_message(self.request, messages.INFO,
+                                     'Ti sei unito alla squadra')
+            else:
+                messages.add_message(self.request, messages.ERROR,
+                                     'Non è possibile aggiungerti alla squadra.\
+                                     Verifica il codice inserito.')
         else:
             messages.add_message(self.request, messages.ERROR,
-                                 'Non è possibile aggiungerti alla squadra.\
-                                 Verifica il codice inserito.')
+                                 'Puoi visitare questa pagina solo dopo\
+                                 esserti autenticato.')
+            return redirect(self.login_url)
         return redirect(self.success_url)
 
 
@@ -70,12 +76,18 @@ class TeamJoinView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         hash = form.cleaned_data.get('hash', "")
         team = Team.objects.filter(hash=hash).first()
-        if team:
-            player = self.request.user
-            player.team = team
-            player.save()
-            messages.add_message(self.request, messages.INFO,
-                                 'Ti sei unito alla squadra')
+        player = self.request.user
+        if player.is_authenticated:
+            if team:
+
+                player.team = team
+                player.save()
+                messages.add_message(self.request, messages.INFO,
+                                     'Ti sei unito alla squadra')
+            else:
+                messages.add_message(self.request, messages.ERROR,
+                                     'Non è possibile aggiungerti alla squadra.\
+                                     Verifica il codice inserito.')
         else:
             messages.add_message(self.request, messages.ERROR,
                                  'Non è possibile aggiungerti alla squadra.\
@@ -86,3 +98,4 @@ class TeamJoinView(LoginRequiredMixin, FormView):
         messages.add_message(self.request, messages.ERROR,
                              'Non hai inserito un codice valido')
         return redirect(self.success_url)
+
