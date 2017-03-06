@@ -1,8 +1,16 @@
 from adidas.models import Player
 from adidas.models import Team
 from django.contrib.auth.mixins import LoginRequiredMixin as BaseLoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.views.generic.detail import SingleObjectMixin
+
+
+class CaptainRequiredMixin(UserPassesTestMixin):
+    login_url = reverse_lazy('account_login')
+
+    def test_func(self):
+        return self.request.user.is_captain
 
 
 class LoginRequiredMixin(BaseLoginRequiredMixin):
