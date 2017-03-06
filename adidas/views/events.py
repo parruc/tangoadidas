@@ -1,5 +1,6 @@
 from adidas.forms import JoinWithdrawEventForm
 from adidas.models import Event
+from adidas.views.mixins import CaptainRequiredMixin
 from adidas.views.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -35,7 +36,7 @@ class EventsView(ListView):
         return context
 
 
-class EventJoinWithdrawView(LoginRequiredMixin, FormView):
+class EventJoinWithdrawView(LoginRequiredMixin, CaptainRequiredMixin, FormView):
     form_class = JoinWithdrawEventForm
     success_url = reverse_lazy("events")
     ok_message = "Hai {action} la tua squadra all\'evento {title}."

@@ -1,5 +1,6 @@
 from adidas.forms import JoinTeamForm
 from adidas.models import Team
+from adidas.views.mixins import CaptainRequiredMixin
 from adidas.views.mixins import LoginRequiredMixin
 from adidas.views.mixins import TeamObjectMixin
 from django.contrib import messages
@@ -32,9 +33,15 @@ class TeamDetailView(LoginRequiredMixin, TeamObjectMixin, DetailView):
         return context
 
 
-class TeamUpdateView(LoginRequiredMixin, TeamObjectMixin, UpdateView):
+class TeamUpdateView(LoginRequiredMixin, CaptainRequiredMixin,
+                     TeamObjectMixin, UpdateView):
     success_url = reverse_lazy("team_view")
     fields = ["name", ]
+
+
+class TeamRemoveView(LoginRequiredMixin, CaptainRequiredMixin,
+                     TeamObjectMixin, FormView):
+    success_url = reverse_lazy("team_view")
 
 
 class TeamJoinByHashView(LoginRequiredMixin, View):
