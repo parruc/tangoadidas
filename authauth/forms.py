@@ -1,8 +1,17 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from material import Layout
+from material import Row
 
 
 class AdidasSignupForm(forms.ModelForm):
+    layout = Layout(
+        Row('username', 'email', ),
+        Row('password1', 'password2', ),
+        Row('first_name', 'last_name', ),
+        Row('birth_date'),
+        Row('image', 'phone_number'),
+    )
     class Meta:
         model = get_user_model()
         fields = ('username', 'email', 'first_name', 'last_name', 'birth_date',
