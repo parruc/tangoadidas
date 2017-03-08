@@ -13,7 +13,8 @@ from django.views.generic.edit import FormView
 class EventsView(ListView):
     template_name = "adidas/events.html"
     model = Event
-    queryset = Event.objects.order_by('start_date', 'start_time')
+    queryset = Event.objects.exclude(status='hidden').\
+        order_by('start_date', 'start_time')
 
     def get_context_data(self, **kwargs):
         context = super(EventsView, self).get_context_data(**kwargs)

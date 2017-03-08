@@ -26,18 +26,28 @@
             {{ event.end_date|date:"D d m" }} {{ event.end_time|time:"H:i" }}
          </div>
          {% if request.user.is_captain %}
-            {% if event.can_witwdraw %}
-                <form method="POST" action="{% url 'event_join_withdraw' 'withdraw' %}">
-                    {% csrf_token %}
-                    {% form form=event.joinwithdraw_event_form %}{% endform %}
-                    <button class="btn waves-effect waves-light" type="submit">Disiscrivi la squadra<i class="material-icons right">cross</i></button>
-                </form>
-            {% elif event.can_join %}
-                <form method="POST" action="{% url 'event_join_withdraw' 'join' %}">
-                    {% csrf_token %}
-                    {% form form=event.joinwithdraw_event_form %}{% endform %}
-                    <button class="btn waves-effect waves-light" type="submit">Iscrivi la squadra<i class="material-icons right">send</i></button>
-                </form>
+            {% if event.status == 'op' %}
+                {% if event.can_witwdraw %}
+                    <form method="POST" action="{% url 'event_join_withdraw' 'withdraw' %}">
+                        {% csrf_token %}
+                        {% form form=event.joinwithdraw_event_form %}{% endform %}
+                        <button class="btn waves-effect waves-light" type="submit">Disiscrivi la squadra<i class="material-icons right">cross</i></button>
+                    </form>
+                {% elif event.can_join %}
+                    <form method="POST" action="{% url 'event_join_withdraw' 'join' %}">
+                        {% csrf_token %}
+                        {% form form=event.joinwithdraw_event_form %}{% endform %}
+                        <button class="btn waves-effect waves-light" type="submit">Iscrivi la squadra<i class="material-icons right">send</i></button>
+                    </form>
+                {% endif %}
+            {% elif event.status == 'co' %}
+                <p>
+                    Non puoi ancora registrarti perché le iscrizioni non sono ancora state aperte.
+                </p>
+            {% elif event.status == 'cl' %}
+                <p>
+                    Non puoi registrarti perché le iscrizioni all'evento sono chiuse.
+                </p>
             {% endif %}
         {% endif %}
      </div>

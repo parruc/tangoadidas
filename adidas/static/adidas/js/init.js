@@ -1,9 +1,11 @@
 ;(function ($) {
    $(function () {
        $(".button-collapse").sideNav();
-       $("input[name='birth_date']").pickadate({
+       // Disables old datepicked and add the new
+       $("input[name='birth_date']").datetimepicker("destroy").pickadate({
             selectMonths: true,
-            selectYears: 60
+            selectYears: 50,
+            max: 2017,
         });
    });
 })(jQuery);

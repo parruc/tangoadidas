@@ -31,6 +31,16 @@ def event_directory_path(instance, filename):
 
 
 class Event(models.Model):
+    COMING = "co"
+    OPEN = "op"
+    CLOSED = "cl"
+    HIDDEN = "hi"
+    STATUS_CHOICES = (
+        (COMING, 'Coming soon'),
+        (OPEN, 'Registrazioni aperte'),
+        (CLOSED, 'Registrazioni chiuse'),
+        (HIDDEN, 'Invisibile'),
+    )
     title = models.CharField("Titolo", max_length=128)
     description = models.TextField("Descrizione", null=True)
     place = models.CharField("Luogo", max_length=256, null=True)
@@ -40,6 +50,8 @@ class Event(models.Model):
     start_time = models.TimeField("Ora di inizio", default=datetime.now)
     end_date = models.DateField("Data di fine", default=date.today)
     end_time = models.TimeField("Ora di fine", default=datetime.now)
+    status = models.CharField("Stato", max_length=2, choices=STATUS_CHOICES,
+                              default=COMING)
     allowed_teams = models.ManyToManyField('Team',
                                            related_name="allowed_teams",
                                            verbose_name="Squadre abilitate", )
@@ -65,7 +77,8 @@ class Player(AbstractUser):
     points_in_event = models.ManyToManyField('Event', verbose_name="Punti",
                                              through='PlayerPointsInEvent')
     image = models.ImageField("Immagine del profili",
-                              upload_to=user_directory_path, null=True, blank=True)
+                              upload_to=user_directory_path,
+                              null=True, blank=True)
     phone_number = models.CharField(validators=[phone_regex], max_length=13,
                                     verbose_name="Numero di telefono",
                                     null=True)

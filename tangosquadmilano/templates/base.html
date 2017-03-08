@@ -18,7 +18,7 @@
         (function ($) {
            $(function () {
                 {% for message in messages %}
-                    Materialize.toast('{{ message }}', 4000);
+                    Materialize.toast('{{ message }}', 4000, {{ message.tags }});
                 {% endfor %}
             });
          })(jQuery);
