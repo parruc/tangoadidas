@@ -45,7 +45,8 @@ ALLOWED_HOSTS = [HOST_NAME, ]
 DEBUG = DEVELOPMENT
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJ_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(PROJ_DIR)
 
 SITE_ID = 1
 
@@ -61,6 +62,7 @@ SECRET_KEY = DJANGO_SECRET_KEY
 INSTALLED_APPS = [
     'adidas',
     'authauth',
+    'socialcrawler',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -79,7 +81,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'compressor',
     'sorl.thumbnail',
-    'socialcrawler',
 ]
 
 MIDDLEWARE = [
@@ -208,6 +209,10 @@ STATICFILES_FINDERS = (
     # other finders..
     'compressor.finders.CompressorFinder',
 )
+
+STATICFILES_DIRS = [
+    os.path.normpath(os.path.join(PROJ_DIR, "static")),
+]
 
 COMPRESS_PRECOMPILERS = (
     ('text/less', '/project/bin/lesscpy {infile} {outfile}'),
